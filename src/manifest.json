@@ -1,0 +1,20 @@
+{
+  "manifest_version": 3,
+  "name": "My SidePanel Extension",
+  "version": "1.0.0",
+  "description": "Chrome extension with side panel (React + Vite + TypeScript)",
+  "background": {
+    "service_worker": "background.js"
+  },
+  "action": {
+    "default_title": "Open Side Panel",
+    "default_icon": {
+      "48": "assets/icon48.png"
+    }
+  },
+  "side_panel": {
+    "default_path": "sidepanel/index.html"
+  },
+  "permissions": ["sidePanel", "tabs"],
+  "host_permissions": ["<all_urls>"]
+}
