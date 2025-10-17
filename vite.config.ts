@@ -1,7 +1,7 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react-swc'
 import { resolve } from 'path'
-// https://vite.dev/config/
+
 export default defineConfig({
   plugins: [react()],
   build: {
@@ -13,7 +13,13 @@ export default defineConfig({
         content: resolve(__dirname, 'src/content.ts'),
       },
       output: {
-        entryFileNames: '[name].js', // background.js, content.js, sidepanel/main.js
+        entryFileNames: '[name].js', // background.js, content.js, sidepanel.js
+        assetFileNames: (assetInfo) => {
+          if (assetInfo.name === 'index.html') {
+            return 'sidepanel/[name].[ext]' // 出力先を dist/sidepanel に変更
+          }
+          return 'assets/[name]-[hash][extname]'
+        },
       },
     },
   },
