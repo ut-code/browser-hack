@@ -7,13 +7,10 @@
     "service_worker": "background.js"
   },
   "action": {
-    "default_title": "Open Side Panel",
-    "default_icon": {
-      "48": "assets/icon48.png"
-    }
+    "default_title": "Open Side Panel"
   },
   "side_panel": {
-    "default_path": "sidepanel/index.html"
+    "default_path": "src/sidepanel/index.html"
   },
   "permissions": ["sidePanel", "tabs"],
   "host_permissions": ["<all_urls>"]
