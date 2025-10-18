@@ -5,13 +5,15 @@ import { resolve } from "path";
 export default defineConfig({
   plugins: [react()],
   build: {
-    lib: {
-      entry: {
+    rollupOptions: {
+      input: {
         sidepanel: resolve(__dirname, "src/sidepanel/index.html"),
         background: resolve(__dirname, "src/background.ts"),
         content: resolve(__dirname, "src/content.ts"),
       },
-      formats: ["es"],
+      output: {
+        entryFileNames: "[name].js",
+      },
     },
   },
 });
