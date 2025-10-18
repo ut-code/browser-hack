@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Lv1</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <header class="headerContainer">
+      <div class="headerLeft">
+        <img src="./images/LogoIcon.png" class="LogoIcon" />
+      </div>
+      <nav class="headerLinks">
+        <button class="linkButton">HOME</button>
+        <button class="linkButton">ABOUT</button>
+        <button class="linkButton">PRODUCTS</button>
+        <button class="linkButton">CONTACT</button>
+      </nav>
+    </header>
+
+    <main>
+      <section class="productSection">
+        <div class="productImageContainer">
+          <img src="./images/productImage.png" class="productImage" />
+        </div>
+        <div class="productInfo">
+          <h1 class="productName">
+            utmusiccode TumbleDown-BTV5 ワイヤレスヘッドホン
+          </h1>
+          <p class="productDesc">
+            ANC/マイク付き/最大80時間再生/マルチポイント対応/
+            外音取り込み/超軽量/人間工学デザイン/ゲーミング・ASMRモード搭載
+          </p>
+          <div class="buyingContainer">
+            <p class="price">￥19,000-(税込)</p>
+            <div class="buyButtons">
+              <button id="Purchase">今すぐ購入</button>
+              <button id="Cart">カートに追加</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="reviewSection">
+        <h2>レビュー</h2>
+        <div class="reviewContainer">
+          <div class="reviewBox">
+            <img src="./images/reviewIcon.png" class="reviewIcon" />
+            <div class="reviewContent">
+              <p class="username">Username</p>
+              <div id="starIcon1">⭐⭐</div>
+              <p class="reviewText">
+                ワイヤレスには対応しているものの、有線接続用のケーブルを取り外すことができず、非常に邪魔くさい。
+                音質も値段の割には悪い。ノイキャンは効いているかどうかわからないレベルであり、
+                電車内では普通にノイズが聞こえる。
+              </p>
+            </div>
+          </div>
+          <div class="reviewBox">
+            <img src="./images/reviewIcon.png" class="reviewIcon" />
+            <div class="reviewContent">
+              <p class="username">Username</p>
+              <div id="starIcon1">⭐</div>
+              <p class="reviewText">
+                とにかくひどい。
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <p class="bottomtext">
+        ©2025 ut.code(); 当サイトのコンテンツはフィクションであり、実際の商品・会社とは一切関係ありません。
+      </p>
+    </footer>
+
+    <script src="/script.mjs"></script>
+  </body>
+</html>
