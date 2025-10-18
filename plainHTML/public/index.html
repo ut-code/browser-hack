@@ -36,6 +36,7 @@
             <p class="price">￥19,000-(税込)</p>
             <div class="buyButtons">
               <button id="Purchase">今すぐ購入</button>
+              <button id="Discount">割引を適用する</button>
               <button id="Cart">カートに追加</button>
             </div>
           </div>
@@ -69,6 +70,17 @@
           </div>
         </div>
       </section>
+      <div class="popup" id="popup">
+      <div class="popupContent">
+        <p>割引コードを持っている場合、以下の欄に記入してください。</p>
+        <input type="text" id="discountInput" placeholder="例: SAVE30" />
+        <div>
+          <button id="applyDiscount">適用</button>
+          <button class="closeBtn" id="closePopup">閉じる</button>
+        </div>
+        <p id="discountMessage"></p>
+      </div>
+    </div>
     </main>
 
     <footer>

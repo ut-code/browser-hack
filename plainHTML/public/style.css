@@ -111,6 +111,14 @@ main {
   border-radius: 6px;
   transition: 0.2s;
 }
+#Discount {
+  padding: 10px 20px;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 6px;
+  transition: 0.2s;
+}
 
 #Purchase {
   background-color: #0070f3;
@@ -179,4 +187,50 @@ footer {
   padding: 30px 0;
   color: #aaa;
   font-size: 14px;
+}
+
+.popup {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.6);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 2000;
+}
+
+.popupContent {
+  background: white;
+  padding: 30px;
+  border-radius: 12px;
+  text-align: center;
+  width: 300px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+}
+
+.popupContent input {
+  width: 80%;
+  padding: 8px;
+  margin: 10px 0;
+}
+
+.popupContent button {
+  padding: 8px 15px;
+  border: none;
+  border-radius: 5px;
+  background-color: #0070f3;
+  color: white;
+  cursor: pointer;
+  margin: 5px;
+}
+
+.popupContent button:hover {
+  background-color: #005ed1;
+}
+
+.closeBtn {
+  background-color: gray;
 }
