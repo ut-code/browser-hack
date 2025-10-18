@@ -1,0 +1,182 @@
+body {
+  margin: 0;
+  font-family: "Segoe UI", sans-serif;
+  background-color: #f8f8f8;
+  color: #333;
+}
+
+/* ヘッダー */
+.headerContainer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 60px;
+  background-color: white;
+  border-bottom: 1px solid #ccc;
+  display: flex;
+  align-items: center;
+  justify-content: space-between; /* ← 左右のバランスを取る */
+  padding: 0 40px; /* ← 横に余白をしっかり確保 */
+  box-sizing: border-box;
+  z-index: 1000;
+}
+
+.headerLinks {
+  display: flex;
+  gap: 30px; /* ← 間隔を調整（20〜30pxでOK） */
+  flex-wrap: nowrap;
+  justify-content: flex-end; /* ← 右寄せしすぎないように */
+  max-width: 60%; /* ← 幅制限をかけて右端からはみ出さない */
+  overflow: hidden; /* ← 万が一はみ出してもスクロールバーを出さない */
+}
+
+
+.LogoIcon {
+  height: 40px;
+}
+
+.headerLinks {
+  display: flex;
+  gap: 20px;
+}
+
+.linkButton {
+  background: none;
+  border: none;
+  font-size: 1rem;
+  font-weight: bold;
+  color: #333;
+  cursor: pointer;
+  transition: 0.2s;
+}
+.linkButton:hover {
+  color: #0070f3;
+}
+
+/* 商品セクション */
+main {
+  margin-top: 100px;
+  padding: 0 10%;
+}
+
+.productSection {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 50px;
+  background-color: white;
+  padding: 30px;
+  border-radius: 15px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.productImage {
+  width: 400px;
+  height: auto;
+  border-radius: 10px;
+}
+
+.productInfo {
+  flex: 1;
+}
+
+.productName {
+  font-size: 28px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.productDesc {
+  color: #555;
+  margin-bottom: 30px;
+}
+
+.price {
+  font-size: 24px;
+  color: #d00;
+  font-weight: bold;
+}
+
+.buyButtons {
+  display: flex;
+  gap: 15px;
+}
+
+#Purchase,
+#Cart {
+  padding: 10px 20px;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 6px;
+  transition: 0.2s;
+}
+
+#Purchase {
+  background-color: #0070f3;
+  color: white;
+}
+#Purchase:hover {
+  background-color: #005ed1;
+}
+
+#Cart {
+  background-color: #f1f1f1;
+}
+#Cart:hover {
+  background-color: #ddd;
+}
+
+/* レビューセクション */
+.reviewSection {
+  margin-top: 80px;
+}
+
+.reviewSection h2 {
+  font-size: 24px;
+  border-left: 5px solid #0070f3;
+  padding-left: 10px;
+}
+
+.reviewContainer {
+  margin-top: 30px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.reviewBox {
+  display: flex;
+  background-color: white;
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0 1px 6px rgba(0,0,0,0.1);
+}
+
+.reviewIcon {
+  width: 40px;
+  height: 40px;
+  margin-right: 15px;
+}
+
+.reviewContent {
+  flex: 1;
+}
+
+.username {
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.reviewText {
+  margin-top: 10px;
+  color: #555;
+}
+
+/* フッター */
+footer {
+  text-align: center;
+  padding: 30px 0;
+  color: #aaa;
+  font-size: 14px;
+}
