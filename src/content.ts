@@ -1,20 +1,16 @@
 export {}
 
-type CheckResult = { ok: boolean; details: string }
 // 判定する関数
-function checkAnswer(): CheckResult {
+// -> 要素の「現在の値」を取得するだけの関数に変更
+function getActualValue(): string {
   const el = document.querySelector<HTMLElement>('[data-check]')
-  if (!el) return { ok: false, details: 'data-check 要素が見つかりません' }
-  const expected = el.getAttribute('data-check') ?? ''
-  const actual = (el.textContent ?? '').trim()
-  return actual === expected
-    ? { ok: true, details: `一致: "${actual}"` }
-    : { ok: false, details: `不一致: expected="${expected}", actual="${actual}"` }
+  if (!el) return '' // 見つからなければ空文字を返す
+  return (el.textContent ?? '').trim()
 }
 
 // デバウンス
 const debounce = <T extends (...a: any[]) => void>(fn: T, delay: number) => {
-  let t: number | undefined // タイマーの識別子
+  let t: number | undefined
   return (...args: Parameters<T>) => {
     if (t) clearTimeout(t)
     // @ts-ignore
@@ -24,19 +20,25 @@ const debounce = <T extends (...a: any[]) => void>(fn: T, delay: number) => {
 
 const ports = new Set<chrome.runtime.Port>()
 
-// サイドパネルからの Port 接続のみ対応
 chrome.runtime.onConnect.addListener((port) => {
   if (port.name !== 'sidepanel') return
   ports.add(port)
-  // 接続直後に最新判定を送る
-  port.postMessage({ type: 'UPDATE', result: checkAnswer() })
+  
+  // 接続直後に「現在の値」を送る (判定結果ではない)
+  port.postMessage({ type: 'DOM_VALUE_UPDATE', actual: getActualValue() })
+  
   port.onDisconnect.addListener(() => ports.delete(port))
 })
-// DevTools等でのDOM変更を監視し、判定結果をサイドパネルへ通知
+
+// DevTools等でのDOM変更を監視し、「現在の値」をサイドパネルへ通知
 const notify = debounce(() => {
-  const result = checkAnswer()
+  // 判定(checkAnswer)はしない
+  const actual = getActualValue() 
   for (const p of ports) {
-    try { p.postMessage({ type: 'UPDATE', result }) } catch {}
+    try { 
+      // 判定結果ではなく、「現在の値」をそのまま送る
+      p.postMessage({ type: 'DOM_VALUE_UPDATE', actual }) 
+    } catch {}
   }
 }, 200) // 200ms ディレイ
 
