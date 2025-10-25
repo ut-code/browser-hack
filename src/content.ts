@@ -1,6 +1,6 @@
 export {}
 
-// 判定する関数
+
 // -> 要素の「現在の値」を取得するだけの関数に変更
 function getActualValue(): string {
   const el = document.querySelector<HTMLElement>('[data-check]')
