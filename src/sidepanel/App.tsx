@@ -9,7 +9,6 @@ function checkAnswer(actual: string): CheckResult {
   if (actual === CORRECT_ANSWER) {
     return { ok: true, details: `一致: "${actual}"` }
   } else {
-    // ユーザーにヒントを出す（正解の文字列は見せない）
     return { ok: false, details: `不一致: あなたの入力="${actual}"` }
   }
 }
@@ -60,7 +59,6 @@ function App() {
 
     connect()
 
-    // useEffectのクリーンアップ関数
     return () => {
       if (port) {
         try {
@@ -76,7 +74,9 @@ function App() {
       {error && <p style={{ color: 'red' }}>Error: {error}</p>}
       {result ? (
         <>
-          <div>判定: {result.ok ? '正解' : '不正解'}</div>
+          <h2>問題1</h2>
+          <p>レビューの「とにかくひどい。」を「すばらしい。」に書き換えてみよう！</p>
+          <h2>判定: {result.ok ? '正解' : '不正解'}</h2>
           <div>詳細: {result.details}</div>
         </>
       ) : (
