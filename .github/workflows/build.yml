@@ -1,5 +1,4 @@
-name: build-and-publish-zip
-
+name: build-and-release
 on:
   push:
     branches: [ main ]
@@ -8,15 +7,17 @@ on:
 permissions:
   contents: write
 
+concurrency:
+  group: build-and-release-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
-  build:
+  release:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-      - name: Setup Node
-        uses: actions/setup-node@v4
+      - uses: actions/setup-node@v4
         with:
           node-version: '20'
           cache: 'npm'
@@ -27,47 +28,35 @@ jobs:
       - name: Build
         run: npm run build
 
-      - name: Install tools
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y jq zip
-
-      - name: Resolve version
+      - name: Resolve version (Node only)
         id: ver
         shell: bash
         run: |
-          if [ -f dist/manifest.json ]; then
-            ver=$(jq -r '.version' dist/manifest.json)
-          elif [ -f manifest.json ]; then
-            ver=$(jq -r '.version' manifest.json)
-          else
-            ver=$(jq -r '.version' package.json)
-          fi
-          echo "version=$ver" >> "$GITHUB_OUTPUT"
+          VERSION=$(node - <<'NODE'
+          const fs = require('fs');
+          const read = p => { try { return JSON.parse(fs.readFileSync(p, 'utf8')).version } catch { return null } };
+          process.stdout.write(read('dist/manifest.json') || read('manifest.json') || read('package.json') || '0.0.0');
+          NODE
+          )
+          echo "version=$VERSION" >> "$GITHUB_OUTPUT"
 
       - name: Zip dist
+        shell: bash
         run: |
           mkdir -p artifacts
-          cd dist
-          zip -r "../artifacts/extension-v${{ steps.ver.outputs.version }}.zip" .
-          cd -
+          (cd dist && zip -r "../artifacts/extension-v${{ steps.ver.outputs.version }}.zip" .)
+          cp "artifacts/extension-v${{ steps.ver.outputs.version }}.zip" "artifacts/extension.zip"
 
-      - name: Copy to vulnerable-web/downloads
-        run: |
-          mkdir -p vulnerable-web/downloads
-          cp "artifacts/extension-v${{ steps.ver.outputs.version }}.zip" vulnerable-web/downloads/
-          cp "artifacts/extension-v${{ steps.ver.outputs.version }}.zip" vulnerable-web/downloads/latest.zip
-
-      - name: Commit zip into repo
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add vulnerable-web/downloads/*
-          git commit -m "chore: publish extension zip v${{ steps.ver.outputs.version }} [skip ci]" || echo "No changes"
-          git push
-
-      - name: Upload artifact (optional)
-        uses: actions/upload-artifact@v4
+      - name: Create GitHub Release and upload assets
+        uses: softprops/action-gh-release@v2
         with:
-          name: extension-v${{ steps.ver.outputs.version }}
-          path: artifacts/*.zip
+          tag_name: v${{ steps.ver.outputs.version }}
+          name: v${{ steps.ver.outputs.version }}
+          draft: false
+          prerelease: false
+          generate_release_notes: true
+          files: |
+            artifacts/extension-v${{ steps.ver.outputs.version }}.zip
+            artifacts/extension.zip
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
