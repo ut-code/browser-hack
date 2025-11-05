@@ -1,3 +1,4 @@
+// content.tsx
 export {}
 
 function isDisplayed(el: Element | null): boolean {
