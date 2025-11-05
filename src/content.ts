@@ -1,11 +1,22 @@
+// content.tsx
 export {}
 
+// 複数の問題の「現在の値」をまとめて取得する
+function getCurrentValues() {
+  // 問題1: テキストのチェック
+  const el1 = document.querySelector<HTMLElement>('[data-check]')
+  const val1 = el1 ? (el1.textContent ?? '').trim() : ''
 
-// -> 要素の「現在の値」を取得するだけの関数に変更
-function getActualValue(): string {
-  const el = document.querySelector<HTMLElement>('[data-check]')
-  if (!el) return '' // 見つからなければ空文字を返す
-  return (el.textContent ?? '').trim()
+  // 問題2: 画像のsrcチェック
+  // data-check2属性を持つ画像のsrcを取得する
+  const el2 = document.querySelector('[data-check2]') as HTMLImageElement
+  // src属性そのもの(例: "img/star5.png")を取得。絶対パス化されるのを防ぐため getAttribute を推奨
+  const val2 = el2 ? (el2.getAttribute('src') ?? '') : ''
+
+  return {
+    p1: val1,
+    p2: val2,
+  }
 }
 
 // デバウンス
@@ -23,24 +34,22 @@ const ports = new Set<chrome.runtime.Port>()
 chrome.runtime.onConnect.addListener((port) => {
   if (port.name !== 'sidepanel') return
   ports.add(port)
-  
-  // 接続直後に「現在の値」を送る (判定結果ではない)
-  port.postMessage({ type: 'DOM_VALUE_UPDATE', actual: getActualValue() })
-  
+
+  // 接続直後に現在の状態を送る
+  port.postMessage({ type: 'DOM_VALUE_UPDATE', values: getCurrentValues() })
+
   port.onDisconnect.addListener(() => ports.delete(port))
 })
 
-// DevTools等でのDOM変更を監視し、「現在の値」をサイドパネルへ通知
+// DOM変更を監視し、まとめて通知
 const notify = debounce(() => {
-  // 判定(checkAnswer)はしない
-  const actual = getActualValue() 
+  const values = getCurrentValues()
   for (const p of ports) {
-    try { 
-      // 判定結果ではなく、「現在の値」をそのまま送る
-      p.postMessage({ type: 'DOM_VALUE_UPDATE', actual }) 
+    try {
+      p.postMessage({ type: 'DOM_VALUE_UPDATE', values })
     } catch {}
   }
-}, 200) // 200ms ディレイ
+}, 200)
 
 const mo = new MutationObserver(() => notify())
 mo.observe(document.documentElement, {

@@ -234,3 +234,8 @@ footer {
 .closeBtn {
   background-color: gray;
 }
+
+#starIcon1 img, #starIcon2 img {
+    width: 100px; /* お好みのサイズに調整してください */
+    height: auto;
+}
