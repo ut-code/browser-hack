@@ -18,23 +18,26 @@ function isDisplayed(el: Element | null): boolean {
 // 複数の問題の「現在の値」をまとめて取得する
 function getCurrentValues() {
   // 問題1: テキストのチェック
-  const el1 = document.querySelector<HTMLElement>('[data-check]')
+  const el1 = document.querySelector<HTMLElement>('.reviewText2')
   const val1 = el1 ? (el1.textContent ?? '').trim() : ''
 
   // 問題2: 画像のsrcチェック
-  // data-check2属性を持つ画像のsrcを取得する
-  const el2 = document.querySelector('[data-check2]') as HTMLImageElement
-  // src属性そのもの(例: "img/star5.png")を取得。絶対パス化されるのを防ぐため getAttribute を推奨
+  const el2 = document.querySelector('#starIcon2 img') as HTMLImageElement
   const val2 = el2 ? (el2.getAttribute('src') ?? '') : ''
 
   // 問題3: 要素の表示状態チェック
-  const el3 = document.querySelector<HTMLElement>('[data-check3]')
+  const el3 = document.querySelector<HTMLElement>('.reviewBox1')
   const val3Visible = isDisplayed(el3)
+
+  // 問題4: 価格表示のテキスト
+  const el4 = document.querySelector<HTMLElement>('#discountMessage')
+  const val4 = el4 ? (el4.textContent ?? '').trim() : ''
 
   return {
     p1: val1,
     p2: val2,
-    p3Visible: val3Visible, 
+    p3Visible: val3Visible,
+    p4: val4,
   }
 }
 
