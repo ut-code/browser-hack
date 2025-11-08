@@ -153,7 +153,14 @@ main {
   gap: 20px;
 }
 
-.reviewBox {
+.reviewBox1 {
+  display: flex;
+  background-color: white;
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0 1px 6px rgba(0,0,0,0.1);
+}
+.reviewBox2 {
   display: flex;
   background-color: white;
   border-radius: 10px;
@@ -176,7 +183,7 @@ main {
   margin-bottom: 5px;
 }
 
-.reviewText {
+.reviewtext {
   margin-top: 10px;
   color: #555;
 }
