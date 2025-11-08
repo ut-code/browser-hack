@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Summer Rock Live</title>
+  <link rel="stylesheet" href="style.css" />
+  <script type="module" src="script.mjs" defer></script>
+</head>
+<body>
+  <header>
+    <h1>Summer Rock Live</h1>
+    <nav>
+      <a href="index.html">ホーム</a>
+      <a href="#overview">概要</a>
+      <a href="#venue">会場</a>
+      <a href="#price">料金</a>
+      <a href="#review">レビュー</a>
+      <a href="admin.html">管理者ページ</a>
+    </nav>
+  </header>
+
+  <main>
+    <section id="overview">
+      <h2>イベント概要</h2>
+      <p>この夏、ロックで盛り上がろう！！！</p>
+      <p>20名の豪華バンドを招待！！</p>
+    </section>
+
+    <section id="venue">
+      <h2>会場情報</h2>
+      <p>岩ホール（東京都世畑山区代替1-2-3）</p>
+      <p>最寄り駅：宇の足線 湖ノ下駅 徒歩5分</p>
+    </section>
+
+    <section id="price">
+      <h2>料金</h2>
+      <ul>
+        <li>一般：20,000円</li>
+        <li>学生(高校生以下)：10,000円</li>
+        <li>児童(未就学児):無料</li>
+      </ul>
+    </section>
+
+    <section id="ticket">
+      <h2>チケット予約</h2>
+      <div id="ticket-status" class="off">
+        現在チケット予約は受付を停止しています。
+      </div>
+      <form id="ticket-form" class="hidden">
+        <label for="user-name">名前：</label>
+        <input type="text" id="user-name" required>
+        <label for="user-email">メールアドレス：</label>
+        <input type="email" id="user-email" required>
+        <button type="submit">予約する</button>
+      </form>
+    </section>
+
+    <section id="review">
+      <h2>レビュー</h2>
+      <blockquote>
+        「懐かしいバンドもあって良かった。若い頃聞いていたあの曲を、現代バンドのカバーで聞くのも悪くないと思った。」 — 50代男性
+      </blockquote>
+      <blockquote>
+        「一昔前の曲と触れ合ういい機会になった。盛り上がりはどこのライブにも負けてない！」 — 20代女性
+      </blockquote>
+    </section>
+  </main>
+
+  <footer>
+    <p>©2025 ut.code(); 当サイトのコンテンツはフィクションであり、実際の商品・会社とは一切関係ありません。</p>
+  </footer>
+</body>
+</html>

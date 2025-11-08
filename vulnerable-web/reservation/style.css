@@ -1,0 +1,203 @@
+/* === ベース設定 === */
+body {
+  font-family: "Hiragino Sans", "Helvetica Neue", Arial, sans-serif;
+  margin: 0;
+  background: linear-gradient(to bottom right, #e3f2fd, #ffffff);
+  color: #333;
+  line-height: 1.8;
+}
+
+/* === 固定ヘッダー === */
+header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background: #3aa9de;
+  color: white;
+  display: flex;
+  justify-content: center; /* ← 中央寄せに変更 */
+  align-items: center;
+  gap: 3em; /* タイトルとナビの間隔を追加 */
+  padding: 0.8em 1.5em;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+  z-index: 1000;
+}
+
+header h1 {
+  margin: 0;
+  font-size: 1.5rem;
+}
+
+/* ナビゲーション */
+nav {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+}
+
+nav a {
+  color: white;
+  margin-left: 1em;
+  margin-top: 0.2em;
+  margin-bottom: 0.2em;
+  text-decoration: none;
+  font-weight: bold;
+  transition: color 0.2s;
+}
+
+nav a:hover {
+  color: #ffe082; /* 少し柔らかい黄色のハイライト */
+}
+
+/* === メインコンテンツ === */
+main {
+  margin-top: 100px;
+  padding: 2em 1.5em;
+  max-width: 960px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+section {
+  background: white;
+  padding: 1.8em;
+  margin-bottom: 1.8em;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  transition: transform 0.2s ease, box-shadow 0.3s ease;
+}
+
+section:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 16px rgba(0,0,0,0.15);
+}
+
+/* === タイトル === */
+h2 {
+  color: #0077b6;
+  border-left: 6px solid #3aa9de;
+  padding-left: 0.6em;
+  margin-bottom: 0.8em;
+}
+
+/* === 段落・テキスト === */
+p, li, blockquote {
+  text-align: left;
+  font-size: 1.05rem;
+  line-height: 1.8;
+}
+
+blockquote {
+  border-left: 4px solid #3aa9de;
+  padding-left: 1em;
+  margin: 0.8em 0;
+  font-style: italic;
+  color: #555;
+}
+
+/* === チケット予約 === */
+#ticket-status.off {
+  color: #d32f2f;
+  font-weight: bold;
+}
+
+#ticket-status.on {
+  color: #388e3c;
+  font-weight: bold;
+}
+
+#ticket-form label {
+  display: block;
+  margin-top: 1em;
+  font-weight: 600;
+  color: #333;
+}
+
+#ticket-form input[type="text"],
+#ticket-form input[type="email"] {
+  display: block;
+  width: 100%;
+  max-width: 400px;
+  padding: 0.6em;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 1rem;
+  margin-top: 0.3em;
+}
+
+#ticket-form button {
+  margin-top: 1.4em;
+}
+
+/* === ボタン === */
+button {
+  background: linear-gradient(90deg, #3aa9de, #0288d1);
+  border: none;
+  padding: 0.7em 1.5em;
+  color: white;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: all 0.25s ease;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
+button:hover {
+  background: linear-gradient(90deg, #4fc3f7, #0288d1);
+  box-shadow: 0 4px 10px rgba(0,0,0,0.25);
+  transform: translateY(-2px);
+}
+
+/* === フッター === */
+footer {
+  text-align: center;
+  padding: 1.2em;
+  background: #3aa9de;
+  color: white;
+  border-top: 3px solid #0288d1;
+  font-size: 0.9rem;
+}
+
+/* === 管理者ページ === */
+body.admin {
+  background: #111;
+  color: #eee;
+}
+
+body.admin header {
+  background: rgba(0,0,0,0.9);
+  backdrop-filter: blur(8px);
+}
+
+body.admin main {
+  background: transparent;
+}
+
+body.admin section {
+  background: #1c1c1c;
+  color: #eee;
+  box-shadow: 0 3px 8px rgba(255,255,255,0.1);
+}
+
+body.admin footer {
+  background: #000;
+  border-top: 2px solid #3aa9de;
+}
+
+.hidden { display: none; }
+
+/* === スマホ対応 === */
+@media (max-width: 768px) {
+  header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  nav {
+    width: 100%;
+    margin-top: 0.5em;
+  }
+  main {
+    margin-top: 140px;
+  }
+}
