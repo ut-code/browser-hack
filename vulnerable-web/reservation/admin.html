@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>管理者ページ</title>
+  <link rel="stylesheet" href="style.css" />
+  <script type="module" src="script.mjs" defer></script>
+</head>
+<body class="admin">
+  <header>
+    <h1>管理者ページ</h1>
+    <nav>
+      <a href="index.html">ホームへ戻る</a>
+    </nav>
+  </header>
+
+  <main>
+    <section id="admin-login">
+      <h2>ログイン</h2>
+      <input type="password" id="admin-pass" placeholder="パスワードを入力" />
+      <button id="login-btn" disabled>ログイン</button>
+      <br>
+      <p>※現在メンテナンス中につきログインボタンを無効化しています。ご了承ください。</p>
+      <p id="login-msg"></p>
+    </section>
+
+    <section id="admin-panel" class="hidden">
+      <h2>チケット予約管理</h2>
+      <button id="toggle-ticket">チケット予約を解禁する</button>
+      <p id="ticket-state"></p>
+    </section>
+  </main>
+
+  <footer>
+    <p>©2025 ut.code(); 当サイトのコンテンツはフィクションであり、実際の商品・会社とは一切関係ありません。</p>
+  </footer>
+</body>
+</html>
