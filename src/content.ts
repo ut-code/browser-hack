@@ -1,27 +1,44 @@
 export {}
 
-// ✅ 問題1：テキスト要素
-function getTextValue(): string {
-  const el = document.querySelector<HTMLElement>('[data-check]')
-  if (!el) return ''
-  return (el.textContent ?? '').trim()
+function isDisplayed(el: Element | null): boolean {
+  if (!el) return false
+  if (!el.isConnected) return false
+  
+  let current: Element | null = el
+  while (current) {
+    const style = getComputedStyle(current)
+    if (style.display === 'none') {
+      return false
+    }
+    current = current.parentElement
+  }
+  return true
 }
 
-// ✅ 問題2：画像要素
-function getImgValue(): string {
-  const img = document.querySelector<HTMLImageElement>('[data-check-img]')
-  if (!img) return ''
-  return img.src ?? ''
+// 複数の問題の「現在の値」をまとめて取得する
+function getCurrentValues() {
+  // 問題1: テキストのチェック
+  const el1 = document.querySelector<HTMLElement>('[data-check]')
+  const val1 = el1 ? (el1.textContent ?? '').trim() : ''
+
+  // 問題2: 画像のsrcチェック
+  // data-check2属性を持つ画像のsrcを取得する
+  const el2 = document.querySelector('[data-check2]') as HTMLImageElement
+  // src属性そのもの(例: "img/star5.png")を取得。絶対パス化されるのを防ぐため getAttribute を推奨
+  const val2 = el2 ? (el2.getAttribute('src') ?? '') : ''
+
+  // 問題3: 要素の表示状態チェック
+  const el3 = document.querySelector<HTMLElement>('[data-check3]')
+  const val3Visible = isDisplayed(el3)
+
+  return {
+    p1: val1,
+    p2: val2,
+    p3Visible: val3Visible, 
+  }
 }
 
-// 現在の値をまとめて送る関数
-function getAllValues() {
-  return [
-    { kind: 'text', actual: getTextValue() },
-    { kind: 'img', actual: getImgValue() },
-  ]
-}
-
+// デバウンス
 const debounce = <T extends (...a: any[]) => void>(fn: T, delay: number) => {
   let t: number | undefined
   return (...args: Parameters<T>) => {
@@ -33,28 +50,35 @@ const debounce = <T extends (...a: any[]) => void>(fn: T, delay: number) => {
 
 const ports = new Set<chrome.runtime.Port>()
 
+// 変更があった場合のみメッセージを送信する
+let lastJson = ''
+function sendMessage() {
+  const values = getCurrentValues()
+  const currentJson = JSON.stringify(values)
+  if (currentJson !== lastJson) {
+    lastJson = currentJson
+    for (const p of ports) {
+      try {
+        p.postMessage({ type: 'DOM_VALUE_UPDATE', values })
+      } catch {}
+    }
+  }
+}
+
 chrome.runtime.onConnect.addListener((port) => {
   if (port.name !== 'sidepanel') return
   ports.add(port)
 
-  // 初回送信
-  for (const v of getAllValues()) {
-    port.postMessage({ type: 'DOM_VALUE_UPDATE', ...v })
-  }
+  // 接続直後に現在の状態を送る
+  const initialValues = getCurrentValues()
+  lastJson = JSON.stringify(initialValues)
+  port.postMessage({ type: 'DOM_VALUE_UPDATE', values: initialValues })
 
   port.onDisconnect.addListener(() => ports.delete(port))
 })
 
-// DOM監視で変更を検知
-const notify = debounce(() => {
-  for (const v of getAllValues()) {
-    for (const p of ports) {
-      try {
-        p.postMessage({ type: 'DOM_VALUE_UPDATE', ...v })
-      } catch {}
-    }
-  }
-}, 200)
+// DOM変更を監視し、まとめて通知
+const notify = debounce(sendMessage, 200)
 
 const mo = new MutationObserver(() => notify())
 mo.observe(document.documentElement, {
@@ -63,3 +87,5 @@ mo.observe(document.documentElement, {
   characterData: true,
   attributes: true,
 })
+// 定期的に送信
+setInterval(sendMessage, 300)

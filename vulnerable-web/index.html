@@ -16,9 +16,9 @@
         <button class="linkButton">ABOUT</button>
         <button class="linkButton">PRODUCTS</button>
         <button class="linkButton">CONTACT</button>
+        <button class="linkButton" target="_blank" onclick="location.href='https://github.com/ut-code/browser-hack/releases/latest/download/extension.zip'">拡張機能ダウンロード</button>
       </nav>
     </header>
-
     <main>
       <section class="productSection">
         <div class="productImageContainer">
@@ -46,11 +46,11 @@
       <section class="reviewSection">
         <h2>レビュー</h2>
         <div class="reviewContainer">
-          <div class="reviewBox">
+          <div class="reviewBox1" data-check3>
             <img src="./images/reviewIcon.png" class="reviewIcon" />
             <div class="reviewContent">
               <p class="username">Username</p>
-              <div id="starIcon1">⭐⭐</div>
+              <div id="starIcon1"><img src="./images/star2.png"></div>
               <p class="reviewText">
                 ワイヤレスには対応しているものの、有線接続用のケーブルを取り外すことができず、非常に邪魔くさい。
                 音質も値段の割には悪い。ノイキャンは効いているかどうかわからないレベルであり、
@@ -58,11 +58,11 @@
               </p>
             </div>
           </div>
-          <div class="reviewBox">
+          <div class="reviewBox2">
             <img src="./images/reviewIcon.png" class="reviewIcon" />
             <div class="reviewContent">
               <p class="username">Username</p>
-              <div id="starIcon1">⭐</div>
+              <div id="starIcon2"><img src="./images/star1.png" data-check2></div>
               <p class="reviewText" data-check>
                 とにかくひどい。
               </p>
@@ -88,7 +88,6 @@
         ©2025 ut.code(); 当サイトのコンテンツはフィクションであり、実際の商品・会社とは一切関係ありません。
       </p>
     </footer>
-
     <script src="/script.mjs"></script>
   </body>
 </html>
