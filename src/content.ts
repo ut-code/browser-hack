@@ -1,14 +1,27 @@
 export {}
 
-
-// -> 要素の「現在の値」を取得するだけの関数に変更
-function getActualValue(): string {
+// ✅ 問題1：テキスト要素
+function getTextValue(): string {
   const el = document.querySelector<HTMLElement>('[data-check]')
-  if (!el) return '' // 見つからなければ空文字を返す
+  if (!el) return ''
   return (el.textContent ?? '').trim()
 }
 
-// デバウンス
+// ✅ 問題2：画像要素
+function getImgValue(): string {
+  const img = document.querySelector<HTMLImageElement>('[data-check-img]')
+  if (!img) return ''
+  return img.src ?? ''
+}
+
+// 現在の値をまとめて送る関数
+function getAllValues() {
+  return [
+    { kind: 'text', actual: getTextValue() },
+    { kind: 'img', actual: getImgValue() },
+  ]
+}
+
 const debounce = <T extends (...a: any[]) => void>(fn: T, delay: number) => {
   let t: number | undefined
   return (...args: Parameters<T>) => {
@@ -23,24 +36,25 @@ const ports = new Set<chrome.runtime.Port>()
 chrome.runtime.onConnect.addListener((port) => {
   if (port.name !== 'sidepanel') return
   ports.add(port)
-  
-  // 接続直後に「現在の値」を送る (判定結果ではない)
-  port.postMessage({ type: 'DOM_VALUE_UPDATE', actual: getActualValue() })
-  
+
+  // 初回送信
+  for (const v of getAllValues()) {
+    port.postMessage({ type: 'DOM_VALUE_UPDATE', ...v })
+  }
+
   port.onDisconnect.addListener(() => ports.delete(port))
 })
 
-// DevTools等でのDOM変更を監視し、「現在の値」をサイドパネルへ通知
+// DOM監視で変更を検知
 const notify = debounce(() => {
-  // 判定(checkAnswer)はしない
-  const actual = getActualValue() 
-  for (const p of ports) {
-    try { 
-      // 判定結果ではなく、「現在の値」をそのまま送る
-      p.postMessage({ type: 'DOM_VALUE_UPDATE', actual }) 
-    } catch {}
+  for (const v of getAllValues()) {
+    for (const p of ports) {
+      try {
+        p.postMessage({ type: 'DOM_VALUE_UPDATE', ...v })
+      } catch {}
+    }
   }
-}, 200) // 200ms ディレイ
+}, 200)
 
 const mo = new MutationObserver(() => notify())
 mo.observe(document.documentElement, {
