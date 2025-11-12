@@ -50,17 +50,21 @@ function App() {
             const currentStep = stepRef.current
 
             if (currentStep === 1) {
-              if (baselineRef.current.p1 === null) { baselineRef.current.p1 = p1; return }
+              // 初回メッセージでベースラインを記録
+              if (baselineRef.current.p1 === null) {
+                baselineRef.current.p1 = p1
+                return
+              }
+              // ベースライン（初期値）から値が変更されたかチェック
               if (p1 !== baselineRef.current.p1) {
-                const isCorrect = p1 === ANSWERS.p1
-                setResult({ ok: isCorrect, details: isCorrect ? `一致: "${p1}"` : `不一致: "${p1}"` })
-                if (isCorrect) {
-                  setTimeout(() => {
-                    setStep(2)
-                    setResult(null)
-                    baselineRef.current.p2 = p2
-                  }, 4000)
-                }
+                // 変更されていれば、それだけで正解とする
+                const isCorrect = true 
+                setResult({ ok: isCorrect, details: `値が変更されました: "${p1}"` })
+                setTimeout(() => {
+                  setStep(2)
+                  setResult(null)
+                  baselineRef.current.p2 = p2
+                }, 4000) 
               }
             }
             
@@ -131,7 +135,7 @@ function App() {
       {step === 1 && (
         <div>
           <h2>問題1</h2>
-          <p>レビューの「とにかくひどい。」を「すばらしい。」に書き換えてみよう！</p>
+          <p>レビューの「とにかくひどい。」をほかの言葉に書き換えてみよう。</p>
           {result && <div className={result.ok ? "result-ok" : "result-ng"}><h3>判定: {result.ok ? '正解！' : '不正解'}</h3><p>{result.details}</p>{result.ok && <p>次の問題へ進みます...</p>}</div>}
           {!result && <p className="hint">ヒント：開発者ツールを使って、レビューに当たる要素を探してみよう。</p>}
         </div>
