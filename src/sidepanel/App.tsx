@@ -132,7 +132,7 @@ function App() {
           port = null
           setResult(null)
           if (!disposed) {
-            setTimeout(connect, 200) // ★ ページ遷移後に再接続
+            setTimeout(connect, 200)
           }
         })
       } catch (e: any) {
