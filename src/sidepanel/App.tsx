@@ -101,6 +101,7 @@ function App() {
                   ok: isCorrect,
                   details: isCorrect ? `割引が適用されました！` : `まだ割引が適用されていません。`
                 })
+                if (isCorrect) { setTimeout(() => { setStep(5); setResult(null);}, 4000) }
               }
             }
           }
@@ -134,27 +135,27 @@ function App() {
 
       {step === 1 && (
         <div>
-          <h2>問題1</h2>
+          <h2>ミッション1</h2>
           <p>レビューの「とにかくひどい。」をほかの言葉に書き換えてみよう。</p>
-          {result && <div className={result.ok ? "result-ok" : "result-ng"}><h3>判定: {result.ok ? '正解！' : '不正解'}</h3><p>{result.details}</p>{result.ok && <p>次の問題へ進みます...</p>}</div>}
+          {result && <div className={result.ok ? "result-ok" : "result-ng"}><h3>判定: {result.ok ? '成功！' : '未達成'}</h3><p>{result.details}</p>{result.ok && <p>次の問題へ進みます...</p>}</div>}
           {!result && <p className="hint">ヒント：開発者ツールを使って、レビューに当たる要素を探してみよう。</p>}
         </div>
       )}
 
       {step === 2 && (
         <div>
-          <h2>問題2</h2>
+          <h2>ミッション2</h2>
           <p>星1の画像(star1.png)の <code>src</code> を書き換えて、星5 (star5.png) にしてみよう！</p>
-          {result && <div className={result.ok ? "result-ok" : "result-ng"}><h3>判定: {result.ok ? '正解！' : '不正解'}</h3><p>{result.details}</p>{result.ok && <p>次の問題へ進みます...</p>}</div>}
+          {result && <div className={result.ok ? "result-ok" : "result-ng"}><h3>判定: {result.ok ? '成功！' : '未達成'}</h3><p>{result.details}</p>{result.ok && <p>次の問題へ進みます...</p>}</div>}
           {!result && <p className="hint">ヒント：imgタグの src 属性を探そう。</p>}
         </div>
       )}
 
       {step === 3 && (
         <div>
-          <h2>問題3</h2>
+          <h2>ミッション3</h2>
           <p>一つ目のレビューを、CSSを使って非表示にしてみよう！</p>
-          {result && <div className={result.ok ? "result-ok" : "result-ng"}><h3>判定: {result.ok ? '正解！' : '不正解'}</h3><p>{result.details}</p>{result.ok && <p>次の問題へ進みます...</p>}</div>}
+          {result && <div className={result.ok ? "result-ok" : "result-ng"}><h3>判定: {result.ok ? '成功！' : '未達成'}</h3><p>{result.details}</p>{result.ok && <p>次の問題へ進みます...</p>}</div>}
           {!result && <p className="hint">ヒント：DevToolsのスタイルパネルで <code>display: none;</code> を追加してみよう。</p>}
         </div>
       )}
@@ -162,11 +163,11 @@ function App() {
       {/* 問題4のUI */}
       {step === 4 && (
         <div>
-          <h2>問題4</h2>
+          <h2>ミッション4</h2>
           <p>割引コードを盗んで、30%割引を適用させよう！</p>
           {result && (
             <div className={result.ok ? "result-ok" : "result-ng"}>
-              <h3>判定: {result.ok ? '正解！' : '不正解'}</h3>
+              <h3>判定: {result.ok ? '成功！' : '未達成'}</h3>
               <p>{result.details}</p>
             </div>
           )}
@@ -174,11 +175,14 @@ function App() {
         </div>
       )}
 
-      {step === 3 && (
+      {step === 5 && (
         <div>
-          <h2>問題5</h2>
+          <h2>最後のミッション</h2>
           <p>今までの知識を使って、予約サイトでチケットを先に予約しよう！</p>
-         
+          <br></br>
+          <a href="https://browser-hack.utcode.net/reservation/">挑戦する</a>
+          <br></br>
+          <p>上のリンクを押して、とあるイベントの予約サイトに侵入し、一足先にチケットを予約しよう。</p>
         </div>
       )}
     </div>
