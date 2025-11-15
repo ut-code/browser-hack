@@ -13,31 +13,44 @@ const ANSWERS = {
 }
 
 function App() {
-  // 現在の問題番号 
   const [step, setStep] = useState(1)
-  // 判定結果
   const [result, setResult] = useState<CheckResult | null>(null)
   const [error, setError] = useState<string | null>(null)
 
-  // イベントリスナー内で最新の step を参照するための Ref
   const stepRef = useRef(step)
-  // 各ステップの初期値を保持するベースライン
   const baselineRef = useRef<{ p1: string | null; p2: string | null; p3Visible: boolean | null; p4: string | null }>({
     p1: null,
     p2: null,
     p3Visible: null,
     p4: null,
   })
+  const pageKeyRef = useRef<string | null>(null)
 
-  // state が変わったら ref も更新しておく
+// 追加: ステップの永続化
+  useEffect(() => {
+    chrome.storage.local.get(['currentStep']).then(({ currentStep }) => {
+      if (typeof currentStep === 'number') {
+        setStep(currentStep)
+        stepRef.current = currentStep
+      }
+    })
+  }, [])
+
+  useEffect(() => {
+    chrome.storage.local.set({ currentStep: step })
+  }, [step])
+
+  // イベントリスナー内で最新の step を参照するための Ref
   useEffect(() => {
     stepRef.current = step
   }, [step])
 
   useEffect(() => {
+    let disposed = false
     let port: chrome.runtime.Port | null = null
 
     const connect = async () => {
+      if (disposed) return
       try {
         const [tab] = await chrome.tabs.query({ active: true, currentWindow: true })
         if (!tab?.id) return
@@ -48,6 +61,12 @@ function App() {
           if (msg?.type === 'DOM_VALUE_UPDATE') {
             const { p1, p2, p3Visible, p4 } = msg.values
             const currentStep = stepRef.current
+
+            if (msg.pageKey !== pageKeyRef.current) {
+              pageKeyRef.current = msg.pageKey ?? null
+              baselineRef.current = { p1: null, p2: null, p3Visible: null, p4: null }
+              setResult(null)
+            }
 
             if (currentStep === 1) {
               // 初回メッセージでベースラインを記録
@@ -109,9 +128,12 @@ function App() {
 
         port.onDisconnect.addListener(() => {
           baselineRef.current = { p1: null, p2: null, p3Visible: null, p4: null }
+          pageKeyRef.current = null
           port = null
           setResult(null)
-          setStep(1)
+          if (!disposed) {
+            setTimeout(connect, 200)
+          }
         })
       } catch (e: any) {
         setError(e?.message ?? String(e))
@@ -121,6 +143,7 @@ function App() {
     connect()
 
     return () => {
+      disposed = true
       if (port) {
         try { port.disconnect() } catch {}
       }
