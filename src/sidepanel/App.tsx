@@ -177,9 +177,8 @@ function App() {
       {step === 3 && (
         <div>
           <h2>問題5</h2>
-          <p>一つ目のレビューを、CSSを使って非表示にしてみよう！</p>
-          {result && <div className={result.ok ? "result-ok" : "result-ng"}><h3>判定: {result.ok ? '正解！' : '不正解'}</h3><p>{result.details}</p>{result.ok && <p>次の問題へ進みます...</p>}</div>}
-          {!result && <p className="hint">ヒント：DevToolsのスタイルパネルで <code>display: none;</code> を追加してみよう。</p>}
+          <p>今までの知識を使って、予約サイトでチケットを先に予約しよう！</p>
+         
         </div>
       )}
     </div>
