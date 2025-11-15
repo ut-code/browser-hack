@@ -6,7 +6,7 @@ const path = window.location.pathname;
 
 if (path.includes("admin")) {
   initAdminPage();
-} else if (path.includes("index")) {
+} else{
   initUserPage();
 }
 
