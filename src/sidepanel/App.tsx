@@ -180,7 +180,15 @@ function App() {
           <h2>最後のミッション</h2>
           <p>今までの知識を使って、予約サイトでチケットを先に予約しよう！</p>
           <br></br>
-          <a href="https://browser-hack.utcode.net/reservation/">挑戦する</a>
+          <button
+             onClick={() => {
+               chrome.runtime.sendMessage({
+                 type: "OPEN_BOOKING",
+                  url: "https://browser-hack.utcode.net/reservation/"
+                });
+              }}>
+              挑戦する
+              </button>
           <br></br>
           <p>上のリンクを押して、とあるイベントの予約サイトに侵入し、一足先にチケットを予約しよう。</p>
         </div>

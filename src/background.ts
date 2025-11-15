@@ -2,6 +2,14 @@ chrome.runtime.onInstalled.addListener(() => {
   console.log("拡張機能がインストールされました！");
 });
 
+chrome.runtime.onMessage.addListener((msg) => {
+  if (msg.type === "OPEN_BOOKING") {
+    chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+      chrome.tabs.update(tabs[0].id, { url: msg.url });
+    });
+  }
+});
+
 
 const targetURL = 'https://browser-hack.utcode.net/'
 function isTargetPage(url?: string): boolean {
