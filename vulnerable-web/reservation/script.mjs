@@ -4,9 +4,9 @@ const ADMIN_PASSWORD = "GekiA2Rock"; // 管理者パスワード
 // --- ページ判定 ---
 const path = window.location.pathname;
 
-if (path.includes("admin.html")) {
+if (path.includes("admin")) {
   initAdminPage();
-} else if (path.includes("index.html") || path.endsWith("/")) {
+} else if (path.includes("index")) {
   initUserPage();
 }
 
