@@ -1,6 +1,8 @@
 // content.tsx
 export {}
 
+const PAGE_KEY = `${location.origin}${location.pathname}`
+
 function isDisplayed(el: Element | null): boolean {
   if (!el) return false
   if (!el.isConnected) return false
@@ -63,7 +65,11 @@ function sendMessage() {
     lastJson = currentJson
     for (const p of ports) {
       try {
-        p.postMessage({ type: 'DOM_VALUE_UPDATE', values })
+        p.postMessage({
+          type: 'DOM_VALUE_UPDATE',
+          pageKey: PAGE_KEY,
+          values,
+        })
       } catch {}
     }
   }
@@ -73,17 +79,19 @@ chrome.runtime.onConnect.addListener((port) => {
   if (port.name !== 'sidepanel') return
   ports.add(port)
 
-  // 接続直後に現在の状態を送る
   const initialValues = getCurrentValues()
   lastJson = JSON.stringify(initialValues)
-  port.postMessage({ type: 'DOM_VALUE_UPDATE', values: initialValues })
+  port.postMessage({
+    type: 'DOM_VALUE_UPDATE',
+    pageKey: PAGE_KEY,
+    values: initialValues,
+  })
 
   port.onDisconnect.addListener(() => ports.delete(port))
 })
 
 // DOM変更を監視し、まとめて通知
 const notify = debounce(sendMessage, 200)
-
 const mo = new MutationObserver(() => notify())
 mo.observe(document.documentElement, {
   childList: true,
@@ -91,5 +99,6 @@ mo.observe(document.documentElement, {
   characterData: true,
   attributes: true,
 })
+
 // 定期的に送信
 setInterval(sendMessage, 300)

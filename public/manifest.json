@@ -1,8 +1,8 @@
 {
   "manifest_version": 3,
-  "name": "My SidePanel Extension",
+  "name": "ブラウザハック入門ミッション",
   "version": "1.0.0",
-  "description": "Chrome extension with side panel (React + Vite + TypeScript)",
+  "description": "ブラウザハック入門のミッション用拡張機能",
   "background": {
     "service_worker": "background.js"
   },
@@ -12,7 +12,7 @@
   "side_panel": {
     "default_path": "src/sidepanel/index.html"
   },
-  "permissions": ["sidePanel", "tabs"],
+  "permissions": ["sidePanel", "tabs", "storage"],
   "host_permissions": ["<all_urls>"],
   "content_scripts": [
     {
