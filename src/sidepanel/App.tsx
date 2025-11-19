@@ -26,6 +26,15 @@ function App() {
   })
   const pageKeyRef = useRef<string | null>(null)
 
+  // リセット処理を行う関数
+  const resetButton = () => {
+    setStep(1)
+    setResult(null)
+    baselineRef.current = { p1: null, p2: null, p3Visible: null, p4: null }
+    pageKeyRef.current = null
+    chrome.storage.local.remove('currentStep')
+  }
+
 // 追加: ステップの永続化
   useEffect(() => {
     chrome.storage.local.get(['currentStep']).then(({ currentStep }) => {
@@ -159,8 +168,8 @@ function App() {
       {step === 1 && (
         <div>
           <h2>ミッション1</h2>
-          <p>レビューの「とにかくひどい。」をほかの言葉に書き換えてみよう。</p>
-          {result && <div className={result.ok ? "result-ok" : "result-ng"}><h3>判定: {result.ok ? '成功！' : '未達成'}</h3><p>{result.details}</p>{result.ok && <p>次の問題へ進みます...</p>}</div>}
+          <p className="problem">レビューの「とにかくひどい。」をほかの言葉に書き換えてみよう。</p>
+          {result && <div><h3 className={result.ok ? "result-ok" : "result-ng"}>{result.ok ? '成功！' : '未達成'}</h3><p>{result.details}</p>{result.ok && <p>次の問題へ進みます...</p>}</div>}
           {!result && <p className="hint">ヒント：開発者ツールを使って、レビューに当たる要素を探してみよう。</p>}
         </div>
       )}
@@ -168,8 +177,8 @@ function App() {
       {step === 2 && (
         <div>
           <h2>ミッション2</h2>
-          <p>星1の画像(star1.png)の <code>src</code> を書き換えて、星5 (star5.png) にしてみよう！</p>
-          {result && <div className={result.ok ? "result-ok" : "result-ng"}><h3>判定: {result.ok ? '成功！' : '未達成'}</h3><p>{result.details}</p>{result.ok && <p>次の問題へ進みます...</p>}</div>}
+          <p className="problem">星1の画像(star1.png)の <code>src</code> を書き換えて、星5 (star5.png) にしてみよう！</p>
+          {result && <div><h3 className={result.ok ? "result-ok" : "result-ng"}>{result.ok ? '成功！' : '未達成'}</h3><p>{result.details}</p>{result.ok && <p>次の問題へ進みます...</p>}</div>}
           {!result && <p className="hint">ヒント：imgタグの src 属性を探そう。</p>}
         </div>
       )}
@@ -177,8 +186,8 @@ function App() {
       {step === 3 && (
         <div>
           <h2>ミッション3</h2>
-          <p>一つ目のレビューを、CSSを使って非表示にしてみよう！</p>
-          {result && <div className={result.ok ? "result-ok" : "result-ng"}><h3>判定: {result.ok ? '成功！' : '未達成'}</h3><p>{result.details}</p>{result.ok && <p>次の問題へ進みます...</p>}</div>}
+          <p className="problem">一つ目のレビューを、CSSを使って非表示にしてみよう！</p>
+          {result && <div><h3 className={result.ok ? "result-ok" : "result-ng"}>{result.ok ? '成功！' : '未達成'}</h3><p>{result.details}</p>{result.ok && <p>次の問題へ進みます...</p>}</div>}
           {!result && <p className="hint">ヒント：DevToolsのスタイルパネルで <code>display: none;</code> を追加してみよう。</p>}
         </div>
       )}
@@ -187,10 +196,10 @@ function App() {
       {step === 4 && (
         <div>
           <h2>ミッション4</h2>
-          <p>割引コードを盗んで、30%割引を適用させよう！</p>
+          <p className="problem">割引コードを盗んで、30%割引を適用させよう！</p>
           {result && (
-            <div className={result.ok ? "result-ok" : "result-ng"}>
-              <h3>判定: {result.ok ? '成功！' : '未達成'}</h3>
+            <div>
+              <h3  className={result.ok ? "result-ok" : "result-ng"}>{result.ok ? '成功！' : '未達成'}</h3>
               <p>{result.details}</p>
             </div>
           )}
@@ -201,7 +210,7 @@ function App() {
       {step === 5 && (
         <div>
           <h2>最後のミッション</h2>
-          <p>今までの知識を使って、予約サイトでチケットを先に予約しよう！</p>
+          <p className="problem">今までの知識を使って、予約サイトでチケットを先に予約しよう！</p>
           <br></br>
           <button
              onClick={() => {
@@ -216,6 +225,7 @@ function App() {
           <p>上のリンクを押して、とあるイベントの予約サイトに侵入し、一足先にチケットを予約しよう。</p>
         </div>
       )}
+      <button onClick={resetButton} className="reset-button">ミッションをリセット</button>
     </div>
   )
 }
