@@ -70,7 +70,7 @@ footer {
   font-size: 0.95rem;
 }
 
-/* ▼▼ ここから追加 ▼▼ */
+
 
 .popup-button {
   margin-top: 1rem;
@@ -90,7 +90,7 @@ footer {
   transform: translateY(-3px);
 }
 
-/* モーダル */
+
 .overlay {
   position: fixed;
   inset: 0;
@@ -138,6 +138,37 @@ footer {
   font-weight: bold;
 }
 
+.info-box-static {
+  width: 90%;
+  max-width: 600px;
+  padding: 1.4rem 1.6rem;
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 14px;
+  box-shadow: 0 6px 14px rgba(0,0,0,0.18);
+  backdrop-filter: blur(6px);
+  animation: fadeIn 0.8s ease;
+  line-height: 1.6;
+}
+
+.info-box-static h2 {
+  margin-top: 0;
+  font-size: 1.4rem;
+  color: #333;
+}
+
+.info-box-static p {
+  margin: 0.6rem 0;
+  font-size: 1rem;
+  color: #444;
+}
+
+.info-box-static code {
+  background: #efefef;
+  padding: 2px 4px;
+  border-radius: 6px;
+  font-size: 0.9em;
+}
+
 @keyframes popupFade {
   from {
     opacity: 0;
@@ -149,4 +180,4 @@ footer {
   }
 }
 
-/* ▲▲ 追加ここまで ▲▲ */
+
