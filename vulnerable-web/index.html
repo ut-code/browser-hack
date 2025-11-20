@@ -14,10 +14,53 @@
   <main>
     <a href="./shopping/index.html">ミッション1～ミッション4に挑戦！</a>
     <a href="./reservation/index.html">最後のミッションに挑戦！</a>
+
+    <!-- ▼▼ ここを追加：モーダルを開くボタン ▼▼ -->
+    <button id="openPopup" class="popup-button">注意事項</button>
+    <!-- ▲▲ ここまで追加 ▲▲ -->
   </main>
 
   <footer>
     <p>©2025 ut.code();</p>
   </footer>
+
+  <!-- ▼▼ ここを追加：モーダル本体 ▼▼ -->
+  <div id="overlay" class="overlay">
+    <div class="popup">
+      <h2>注意事項</h2>
+      <p>このサイトではマニュアルを参照します。手元で見ながら進めましょう。</p>
+      <h2>拡張機能の開き方</h2>
+      <p>
+        右上の「パズルのピースのアイコン」を押し、「ブラウザハック入門ミッション」を選択してください。 
+      </p>
+      <br>
+      <h2>リセットの仕方</h2>
+      <p>もし表示されたミッションがミッション1でないときは、「ミッションをリセット」を押してください。</p>
+      
+      <button id="closePopup" class="close-button">閉じる</button>
+    </div>
+  </div>
+  <!-- ▲▲ ここまで追加 ▲▲ -->
+
+  <!-- ▼▼ ここを追加：スクリプト ▼▼ -->
+  <script>
+    const openBtn = document.getElementById("openPopup");
+    const closeBtn = document.getElementById("closePopup");
+    const overlay = document.getElementById("overlay");
+
+    openBtn.addEventListener("click", () => {
+      overlay.classList.add("active");
+    });
+
+    closeBtn.addEventListener("click", () => {
+      overlay.classList.remove("active");
+    });
+
+    overlay.addEventListener("click", (e) => {
+      if (e.target === overlay) overlay.classList.remove("active");
+    });
+  </script>
+  <!-- ▲▲ 追加ここまで ▲▲ -->
+
 </body>
 </html>
