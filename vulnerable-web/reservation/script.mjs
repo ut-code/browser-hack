@@ -40,13 +40,13 @@ function initAdminPage() {
   });
 
   toggleBtn?.addEventListener("click", () => {
-    const current = localStorage.getItem("ticketOpen") === "true";
-    localStorage.setItem("ticketOpen", (!current).toString());
+    const current = sessionStorage.getItem("ticketOpen") === "true";
+    sessionStorage.setItem("ticketOpen", (!current).toString());
     updateTicketStateText();
   });
 
   function updateTicketStateText() {
-    const open = localStorage.getItem("ticketOpen") === "true";
+    const open = sessionStorage.getItem("ticketOpen") === "true";
     ticketState.textContent = open
       ? "現在チケット予約は解禁中です。"
       : "現在チケット予約は停止中です。";
@@ -58,7 +58,7 @@ function initAdminPage() {
 
 // --- 一般ページ処理 ---
 function initUserPage() {
-  const open = localStorage.getItem("ticketOpen") === "true";
+  const open = sessionStorage.getItem("ticketOpen") === "true";
   const ticketStatus = document.getElementById("ticket-status");
   const ticketForm = document.getElementById("ticket-form");
 

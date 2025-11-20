@@ -1,75 +1,105 @@
+/* Enhanced Styling for a More Vibrant Look */
+
+:root {
+  --primary: #ff6ac1;
+  --secondary: #6a9bff;
+  --bg-gradient: linear-gradient(135deg, #ffe1f0, #dfe9ff);
+  --card-bg: rgba(255, 255, 255, 0.85);
+  --success: #00c853;
+  --fail: #d50000;
+}
+
+body {
+  background: var(--bg-gradient);
+  font-family: 'Nunito', sans-serif;
+}
+
 #root {
   max-width: 1280px;
   margin: 0 auto;
   padding: 2rem;
   text-align: center;
+  animation: fadeIn 0.8s ease-in-out;
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
-}
-
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
-}
-
-.card {
-  padding: 2em;
-}
-
-.read-the-docs {
-  color: #888;
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
 .container {
-  padding: 1rem;
+  padding: 1.5rem;
   text-align: center;
+  backdrop-filter: blur(10px);
+  border-radius: 16px;
+  background: var(--card-bg);
+  box-shadow: 0 4px 20px rgba(0,0,0,0.1);
 }
 
-.reset-button {
-  margin-top: 2rem;
-  padding: 4px 8px;
-  font-size: 0.8em;
-  background-color: #666;
-  color: white;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-}
-
-.reset-button:hover {
-  background-color: #888;
+h2 {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--primary);
+  margin-bottom: 1rem;
+  text-shadow: 0 1px 3px rgba(0,0,0,0.15);
 }
 
 .problem {
   font-size: 1.2em;
+  margin-bottom: 0.8rem;
+  color: #444;
 }
+
+.hint {
+  font-size: 0.95em;
+  opacity: 0.8;
+  color: #333;
+  margin-top: 0.4rem;
+}
+
 .result-ok {
   font-weight: bold;
   font-size: 2rem;
   margin-top: 1rem;
-  padding: 0.1rem;
+  padding: 0.2rem;
+  color: var(--success);
+  text-shadow: 0 1px 3px rgba(0,0,0,0.3);
+}
+
+.result-ng {
+  font-weight: bold;
+  font-size: 2rem;
+  margin-top: 1rem;
+  padding: 0.2rem;
+  color: var(--fail);
+}
+
+button {
+  padding: 0.6rem 1.2rem;
   border: none;
-  background-color: none;
-  color: #ff0000;
+  border-radius: 8px;
+  cursor: pointer;
+  background: var(--secondary);
+  color: white;
+  font-weight: bold;
+  transition: all 0.2s ease-in-out;
+  box-shadow: 0 3px 12px rgba(0,0,0,0.15);
+}
+
+button:hover {
+  transform: scale(1.05);
+  background: #4f7df5;
+}
+
+.reset-button {
+  margin-top: 2rem;
+  padding: 6px 14px;
+  font-size: 0.85em;
+  background-color: #888;
+  border-radius: 6px;
+}
+
+.reset-button:hover {
+  background-color: #666;
+  transform: scale(1.05);
 }
