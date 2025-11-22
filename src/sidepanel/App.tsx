@@ -66,6 +66,11 @@ function App() {
 
         port = chrome.tabs.connect(tab.id, { name: 'sidepanel' })
 
+        // --- ここから追加 ---
+        // サイドパネルが開いたことを content.ts に通知
+        port.postMessage({ type: 'SIDE_PANEL_OPENED' });
+        // --- ここまで追加 ---
+
         port.onMessage.addListener((msg) => {
           if (msg?.type === 'DOM_VALUE_UPDATE') {
             const { p1, p2, p3Visible, p4 } = msg.values
